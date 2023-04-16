@@ -1,0 +1,37 @@
+﻿<div class="container m-5 p-5">
+    <div>
+        <h3>Write a word that is misspelled. I will find the closest matching word.</h3>
+    </div>
+        
+        <div class="input-group">
+            <input class="form-control" type="text" id="userInput"/>
+            <div class="input-group-append">
+                <button id="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    <div class="m-3" style="display: none;">
+        <p>Is this the word you were trying to spell?</p>
+        <ul class="results">
+
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    $(document).on('click', '#submit', function () {
+        var userInput = $('#userInput').val();
+        $.ajax({
+            url: "/Home/FindKeywords",
+            data: { input: userInput },
+            success: function (words) {
+                $('.results').html("");
+                words.forEach(function (word) {
+                    $('.results').append(`<li>${word}</li>`)
+                    
+                })
+                $('.results').parent().show();
+            }
+        })
+    });
+</script>
